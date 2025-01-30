@@ -54,17 +54,34 @@ print(math.sqrt(4))  # Raíz cuadrada, resultado: 2
 print(math.sqrt(12))  # 3.4641016151377544
 
 '''Otro módulo es el random que nos permite generar y seleccionar números aleatorios, entre muchas otras opciones'''
+
 import random
-random.random ()
-0.6567888091274212
+
+num_aleat=random.random ()
+print(num_aleat)
+
+#0.6567888091274212
+
 lista = [1, 2, 3, 4]
 random.choice(lista)
+print("Valor aleatorio seleccionado",lista)
+
 3
+
 random.shuffle(lista)
-lista
-[2, 3, 1, 4]
+
+#lista
+#[2, 3, 1, 4]
+print("Lista mezclada",lista)
 
 
-'''Para ejecutarlo, con Visual Studio Code. Abre la terminal
-py C:\Users\Viviana\Documents\Phyton\PracticasPersonales\Tema5Parte2.py
-El comando py y el path'''
+'''Para ejecutarlo, con Visual Studio Code. Abre la terminal py camino del archivo...El comando py y el path'''
+
+
+'''Para saltarnos la precedencia podemos utilizar paréntesis para aislar expresiones. En Python, las expresiones entre paréntesis se evalúan siempre antes que el resto. De esta manera, en la expresión "A", si quisiéramos evaluar antes la suma, haríamos la expresión "B "lo siguiente: A * (B + C) * D.'''
+a= 2 * 3 + 3 * 4 # Expresión "A" Multiplicación precede a la suma.
+14
+b= 2 * (3+2) * 4 # Expresión "B" Expresiones entre paréntesis se evaluan primero
+40
+print (a)
+print (b)
