@@ -59,28 +59,128 @@ print('El mínimo y el máximo de la Tupla son respectivamente: ',minimo, maximo
 
 #Ejercicio de experimentación con factores primos
 
-def factores_primos(n):
-    factores = []
-    
+def factores_primos(n): # Recibe un número entero n como parámetro.
+    factores = [] # Objetivo: Devolver una lista con los factores primos de n
+    #En la línea anterior creamos una lista vacia "factores" guardaremos allí los factores primos que vayamos encontrando
+
     # Dividir por 2 hasta que ya no sea divisible
-    while n % 2 == 0:
-        factores.append(2)
-        n //= 2  # Reducimos el número dividiendo entre 2
+    while n % 2 == 0: # Significa que es divisible por 2 hasta no dejar residuo
+        factores.append(2) # Agrega 2 a la lista con el append
+        n //= 2  # Reducimos el número dividiendo entre 2, significa que es una división entera, por lo que elimina todos los factores 2 en n
 
     # Probar con los impares desde 3 hasta la raíz cuadrada de n
     i = 3
-    while i * i <= n:
+    while i * i <= n: #Ejecutamos el algoritmo hata que el cuadrado de i sea mayor que n ya que todo número compuesto tiene al menos un factor primo menor o igual a su raíz cuadrada
         while n % i == 0:  # Si es divisible, lo agregamos y reducimos n
-            factores.append(i)
+            factores.append(i) # Agrega i a la lista de factores
             n //= i
-        i += 2  # Solo probamos con impares
+        i += 2  # Solo probamos con impares, saltamos al siguiente número impar
 
     # Si queda un número mayor a 2, también es un factor primo
     if n > 2:
-        factores.append(n)
+        factores.append(n) # Agregamos el númeroa la lista de factores
 
     return factores
 
 # Prueba con un número
-num = 105
-print(f"Factores primos de {num}: {factores_primos(num)}")
+num = 2025 #En este renglón colocar el número que se quiere facorizar
+print(f"Factores primos de {num}: {factores_primos(num)}") #Muestra la lista factores
+
+
+# Parámetros y argumentos - Objetos Mutables e Inmutables
+# Ejemplo de inmutables
+def suma(a, b): # Modificamos a y b en el scope de suma()
+    a = 3
+    b = 4
+    return a+b
+
+a, b = 5, 10
+print('Objetos inmutables:')
+print(suma(a, b))
+print(a, b) # a y b no han cambiado fuera de la función
+
+# Ejemplo de Mutables
+
+def minimo(l):
+    l[0] = 1000 # Modificamos la lista en el interior
+    return min(l)
+
+l = [1, 2, 3]
+
+print('Objetos mutables:')
+print('Lista original',l)
+print('Mínimo de la lista luego de cambiar el elemento 0:',minimo(l)) # Modifica la lista aquí
+print('Lista luego de reemplazar el elemento 0:',l)
+
+
+# Formas de paso de argumentos
+# 1 Por Posición
+def f(a, b, c): # llama a la función con sus argumentos en orden
+    print('Paso de argumentos por posicion:', a, b, c)
+
+f(1, 2, 3)
+
+# 2 Por Keywords
+def f(a, b, c): # utiliza la sintaxis nombre=valor
+    print('Paso de argumentos por keywords', a, b, c)
+
+f(c=12, a=10, b=100)
+
+# 3 Especificando valores por defecto en la definición de la llamada
+def f(a, b=10, c=30):
+    print('Especificando valores en la definición de la llamada:', a, b, c)
+
+f(1)
+f(1, 12)
+f(1, 12, 19)
+
+# 4 Especificando en la función que se le pasará una colección de argumentos 
+def f(*args): # Acepta número arbitrario de argumentos
+    print('Colección de argumentos', args)
+
+f() # Si no hay argumentos, args es una tupla vacía
+f(1)
+f(1, 2)
+f(1, 2, 3, 4, 5, 6)
+
+# 5 Si usamos la sintaxis de doble asterisco:
+def f(**Kargs): # Acepta número de argumentos por nombre
+    print('Colección de argumentos por nombre',Kargs)
+
+f() # Si no hay argumentos, Kargs es un diccionario vacío
+f(a=1)
+f(a=1, b=2)
+f(a=1, c=3, b=2)
+
+# 6 Desempaquetando una colección de argumentos posicionales o por keyword
+
+# 7 Desempaquetar un diccionario utilizando la sintaxis de doble asterisco
+def f(a, b, c, d):
+    print('Colección de diccionario por **', a, b, c, d)
+
+argumentos = {'b':20, 'a':1, 'c':300,'d':4000}
+f(**argumentos) # Desempaquetando diccionario argumentos con **
+
+argumentos = {'b':200, 'c':300, 'd':400}
+f(10, **argumentos) # Podemos combinar argumentos posicionales con dict
+
+# 8 Utilizando argumentos que sólo pueden ser pasados por clave (keyword-only)
+def f(a, *b, c): # Hay que pasar 'c' por clave obligatoriamente
+    print('Colección de argumentos pasados por keyword-only',a, b, c)
+
+f(1, c=2)
+f(1, 2, c=3)
+f(1, 2, 3, 4, 5, c=10)
+
+
+# 9 Los argumentos tras el ‘*’ se convierten en keywordonly: hay muchas funciones escritas en Python que aprovechan estas funcionalidades como, por ej., las funciones builtin zip y print.
+la = [1, 2, 3, 4, 5]
+lb = list('abcde')
+lc = list('ABCDE')
+
+zlist = list(zip(la, lb, lc)) # zip soporta cualquier número de argumentos posicionales
+zlist
+a, b, c = zip(*zlist) # El * en zip desempaqueta lista de tuplas
+print('Colección de argumentos Keywordonly ', la, lb, lc, sep = '\n')
+print('Colección de argumentos ', la, lb) # Separador por defecto es espacio
+
