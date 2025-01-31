@@ -85,3 +85,13 @@ b= 2 * (3+2) * 4 # Expresión "B" Expresiones entre paréntesis se evaluan prime
 40
 print (a)
 print (b)
+
+#---------------------------------------------------------------
+#Tema5Parte5
+
+'''def nombre_de_la_función(arg1, arg2, ...a
+rgN):
+sentencias
+return #El return es opciona'''
+
+
