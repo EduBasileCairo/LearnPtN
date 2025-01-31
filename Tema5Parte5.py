@@ -184,3 +184,27 @@ a, b, c = zip(*zlist) # El * en zip desempaqueta lista de tuplas
 print('Colección de argumentos Keywordonly ', la, lb, lc, sep = '\n')
 print('Colección de argumentos ', la, lb) # Separador por defecto es espacio
 
+# Por el ejercicio de la página 17 ver el archivo EjercicioTema5Parte5.py
+
+# Definición de variables
+x = 15
+y = "Ana"
+print('valor de la variable x:', x)
+print('valor de la variable y:', y)
+
+# Guardamos en la variable suma el resultado de 1 + 2
+suma = 1 + 2
+# Accedemos al resultado de 1 + 2 a través de la variable suma
+print('Resultado de la suma: ', suma)
+
+
+# Asignar un valor a una variable en Python
+# Asigna a la variable <a> el valor 1
+a = 1
+print('Valor de la variable a:', a)
+# Asigna a la variable <a> el resultado de la expresión 3 * 4
+a = 3 * 4
+print('Valor de la variable a:', a)
+# Asigna a la variable <a> la cadena de caracteres 'Pythonista'
+a = 'Pythonista'
+print('Valor de la variable a:', a)
