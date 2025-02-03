@@ -72,3 +72,72 @@ else:
         print("Añadido al diccionario")
 
 print(d) # Mostramos por pantalla el diccionario
+
+
+#Ejemplo 2: Tenemos un diccionario en el que asociamos los números de los documentos de identidad de ciertas personas con su edad. Realizar un programa en el que el usuario introduzca el número de un documento. Si el número ya está en el diccionario debe mostrar la edad, en caso contrario debe solicitarnos que introduzcamos la edad, que posteriormente añadiremos al diccionario.
+d = { "50862634" : 37 , "43394932" : 32} #Creamos el diccionario
+
+texto = input("Introduce un número de documento de identidad: ")
+if texto in d: #Comprobamos si está en el diccionario
+    print( "La edad de " + texto + " es " + str(d[texto]))
+else:
+    edad = input("El documento no existe. Introduce la edad: ")
+    if edad.isnumeric():
+        num = int(edad)
+        d[texto] =  num
+        print("Añadido al diccionario")
+
+print(d) #Mostramos en pantalla el diccionario
+
+
+#Ejemplo 3:¿Si quisiéramos guardar este diccionario en un archivo y posteriormente abrirlo siempre que queramos consultarlo? Para ello usamos el paquete Path y Pickle (los veremos más detalladamente en otro momento). Pickle nos ofrece procedimientos para poder leer y escribir diccionarios en archivos. El paquete Path lo utilizamos para comprobar si el archivo existe. Veamos un ejemplo sencillo para leer un archivo y guardarlo en un diccionario:
+#Read Python dict from a file. Atencion en el apunte está diferente.
+import pickle
+# Escribir el diccionario en el archivo (esto crea 'myfile.pkl')
+mydict = {'a': 7, 'b' : 8, 'c' : 9}
+with open('myfile.pkl' , 'wb') as output:
+    pickle.dump(mydict, output)
+# Leer el diccionario desde el archivo
+with open('myfile.pkl', 'rb') as pkl_file:
+    mydict2 = pickle.load(pkl_file)
+print(mydict2) # Debería mostrar {'a': 7, 'b': 8, 'c': 9}
+
+
+# Ejemplo 4: (En el apunte 6.3 hoja 11)
+import pickle
+from pathlib import Path
+
+#Create an empty dictionary
+d = dict()
+
+#Ask for file name to load dictionary from
+file_name = input('introduce el nombre del archivo con los datos: ')
+
+#Comprobamos que existe
+path = Path(file_name)
+if path.is_file():
+    # Open file in reading mode
+    input_file = open(file_name, 'rb')
+    d = pickle.load(input_file)
+    #Close de file
+    input_file.close()
+else:
+    print('El file no existe, creamos diccionario vacio')
+
+#Check for values or add new ones
+document_number = input('Introduce un documento de identidad ')
+
+if document_number in d: #Check whether it is on dict or not
+    print('La edad de ' + document_number + ' es '+ str(d[document_number]))
+else:
+    age = input('Documento no existente. Introduce la edad: ')
+    if age.isnumeric():
+
+        num = int(age)
+        d[document_number] = num
+        print('Añadido al diccionario')
+
+# Save dict on file and close
+output_file = open(file_name, 'wb')
+pickle.dump(d, output_file)
+output_file.close()
