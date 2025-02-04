@@ -236,8 +236,60 @@ for k in d:
 # edad: 60
 # nombre: Guido
 
-# Asignación en TUPLAS (página 16)
+# Asignación en TUPLAS: Python permite la asignación en tuplas. Es decir, que podemos asignar los elementos de una tupla a varias variables a la vez.
+a, b = (3, 4) # Asignamos los elementos de la tupla a cada variable
+print ('Ejemplo 1 - Tuplas')
+print(+ a, b)
+# 3 4
 
+# De momento nos basta con conocer que esto es muy conveniente en bucles for. Por ejemplo:
+t = [(1, 2), (3, 4), (5, 6)]
+for x, y in t:
+    print ('Ejemplo 2 - Tuplas')
+    print (x + y, end= ' ')
+# 3 7 11
+# En este ejemplo estamos recorriendo una lista de tuplas y las vamos asignando a dos variables simultáneamente (x, e y) que luego utilizamos dentro del for para ir sumándolas. Este proceso se llama desempaquetado en tuplas. Es muy útil en muchas situaciones como, por ejemplo, cuando queremos recorrer dos listas en paralelo:
+la = [10, 20, 30, 40]
+lb = [5, 25, 50, 10]
+for a, b in zip(la, lb):
+    m = max(a, b) # max(a, b) devuelve el máximo entre a y b
+    print(m , end=' ')
+print('Son los máximos entre a y b, comparando el elemento 0 del la con el elemento 0 de lb y así con los siguientes pares de elemetos')
+# 10 25 50 40
+# En este ejemplo recorremos dos listas usando la función zip (cremallera) que, en cada iteración, nos devuelve una tupla cogiendo un elemento de cada una de las listas. Luego, dentro del for, comparamos cuál de los dos elementos es mayor con la función max y lo mostramos por pantalla.
 
+# Otro uso muy común del desempaquetado en tuplas es navegar por los objetos de un diccionario. Anteriormente vimos un ejemplo donde recorríamos un diccionario a través de sus claves. Ahora vamos a ver cómo recorrer todos sus elementos a la vez:
+keys = ['nombre', 'apellidos', 'edad']
+values = ['Guido', 'van Rossum', 60]
+d = dict(zip(keys, values))
+for k, v in d.items(): # d.items devuelve tupla con clave, valor
+    print('{}: {}'.format(k, v))
+# apellidos: van Rossum
+# edad: 60
+# nombre: Guido
+# Vemos que el método dict.items nos devuelve una tupla (clave, valor) correspondiente a una entrada del diccionario en cada iteración del for.
 
+# Vistas en diccionarios:
+# A partir de Python 3.5, el método dict.items devuelve una vista de los elementos del diccionario, es decir, no devuelve los objetos en sí hasta que no los recorramos o los convirtamos explícitamente en listas. Otros métodos tienen el mismo comportamiento son dict.keys y dict.values, que devuelven vistas de las claves y los valores respectivamente.
+for k in d.keys():
+    print(k, end= ' ') # apellidos edad nombre
+for v in d.values():
+    print(v, end= ' ') # Van Rossum 60 Guido
 
+# Si en lugar de recorrerlos, intentamos extraer todos las claves o elementos vemos que no devuelven una lista, sino que son vistas del diccionario:
+d = {'nombre': 'Guido', 'apellidos': 'van Rossum', 'edad': 60}
+
+# Vista de las claves
+claves = d.keys()
+print(claves)  # Output: dict_keys(['nombre', 'apellidos', 'edad'])
+
+# Vista de los valores
+valores = d.values()
+print(valores)  # Output: dict_values(['Guido', 'van Rossum', 60])
+
+# Vista de los pares clave-valor
+items = d.items()
+print(items)  # Output: dict_items([('nombre', 'Guido'), ('apellidos', 'van Rossum'), ('edad', 60)])
+# Tened en cuenta que no podemos acceder directamente a estas listas, sino que tenemos que, o bien recorrerlas como hemos visto antes, o bien envolverlas en listas para poder indexarlas, trocearlas, etc.
+
+# Bucles for y contadores: (pag. 18)
