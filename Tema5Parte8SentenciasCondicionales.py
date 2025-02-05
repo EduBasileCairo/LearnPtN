@@ -293,3 +293,27 @@ print(items)  # Output: dict_items([('nombre', 'Guido'), ('apellidos', 'van Ross
 # Tened en cuenta que no podemos acceder directamente a estas listas, sino que tenemos que, o bien recorrerlas como hemos visto antes, o bien envolverlas en listas para poder indexarlas, trocearlas, etc.
 
 # Bucles for y contadores: (pag. 18)
+# Diferencias entre el for de otros lenguajes como C/C++ o Java con los de Python. Los bucles for de Python son más parecidos a los for-each de otros lenguajes de programación. Es decir, están destinados a recorrer los elementos de secuencias o iterables. Primero de todo, veamos cómo es un for al estilo C y al estilo Pythónico. La vía Pythónica es, en casi todos los casos, más legible y más rápida de ejecutar.
+letras = list('abcdesfghijklmnopqrstuvwxyz')
+for i in range(len(letras)): # Versión C/C++. No lo uséis!
+    print(letras[i], end='')
+# a b c d e f g h i j k l m n o p q r s t u v w x y z
+for c in letras:    #Versión Pythonica. Más legible y rápido
+    print(c, end=' ')
+# a b c d e f g h i j k l m n o p q r s t u v w x y z
+# Podemos ver se puede hacer un for al estilo C/C++. La función range nos devuelve un listado de números consecutivos de la longitud que le pasemos. En este caso, le hemos pasado la longitud de la lista de letras.
+# Ejemplos de uso de range
+# Hay que envolverlo en lista o recorrerlo en for
+list(range(5)) # Devuelve 5 elementos empezando en 0
+[0, 1, 2, 3, 4]
+list(range(-5, 5)) # Devuelve elementos en el rango -5, 5
+[-4, -3, -2, -1, 0, 1, 2, 3, 4]
+list(range(-5, 5, 2)) # Elementos -5 a 5 en saltos de 2
+[-5, -3, -1, 1, 3]
+print("Primer rango:", list(range(5)))
+print("Segundo rango:", list(range(-5, 5)))
+print("Tercer rango:", list(range(-5, 5, 2)))
+# En general, es siempre recomendable utilizar el bucle for al estilo de Python. Cuando empecemos a utilizar bucles nos veréis tentados a utilizar los for de la manera típica de otros lenguajes. Salvo algunas excepciones, siempre es mejor hacerlo de la manera Pythónica. A continuación, exponemos algunos de los casos típicos donde los recién llegados a Python tienen tendencia a programar bucles for no Pythónicos. También damos la alternativa que se debe utilizar.
+
+# Pag 20
+
