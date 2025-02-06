@@ -315,5 +315,68 @@ print("Segundo rango:", list(range(-5, 5)))
 print("Tercer rango:", list(range(-5, 5, 2)))
 # En general, es siempre recomendable utilizar el bucle for al estilo de Python. Cuando empecemos a utilizar bucles nos veréis tentados a utilizar los for de la manera típica de otros lenguajes. Salvo algunas excepciones, siempre es mejor hacerlo de la manera Pythónica. A continuación, exponemos algunos de los casos típicos donde los recién llegados a Python tienen tendencia a programar bucles for no Pythónicos. También damos la alternativa que se debe utilizar.
 
-# Pag 20
+# El primero de estos ejemplos ya lo hemos visto anteriormente. Se trata de recorrer varias listas simultáneamente.
+import random
+l1 = letras [:8] #Creamos 3 listas a partir de trozos
+l2 = letras [8:16]
+l3 = letras [:16]
+
+random.shuffle(l1) # Barajamos cada trozo
+random.shuffle(l2)
+random.shuffle(l3)
+
+for i in range(len(l1)): # Versión no Pythónica. NO RECOMENDADA
+    print(l1[i] + l2[i] + l3[i], end='')
+    print(' No Pythónica')
+# cpv emq dlt hnr fis gow akz bjx
+
+for a, b, c in zip(l1, l2, l3): # Versión Pythonica
+    print(a + b + c, end=' ')
+    print('Pythónica')
+# cpv emq dlt hnr fis gow akz bjx
+# En este ejemplo estamos troceando la lista letras en tres partes, luego barajamos cada una de las partes y recorremos las tres listas simultáneamente para ir mostrando en pantalla una letra de cada lista en cada iteración. La versión Pythónica utiliza la función zip, que ya habíamos visto antes. La única diferencia es que, en este caso, en lugar de unir dos listas estamos haciéndolo con tres. La gran ventaja de zip (además de ser más legible) es que no tenemos que preocuparnos de que todas las listas sean de igual longitud. Cuando una de las listas se termina, zip detiene la ejecución. En la alternativa no Pythónica, tendríamos que consultar las longitudes de cada lista y recorrer el bucle siguiendo los índices de la lista más corta.
+    
+# Otro ejemplo típico en el que los programadores noveles de Python tienden a hacer uso de for no Pythónicos es cuando estamos haciendo búsquedas de índices de los elementos de una lista. Por ejemplo:
+letras = list ('abcdefghijklmnopqrstuvwxyz')
+vocales = 'aeiou'
+
+random.shuffle(letras)
+print(''.join(letras))
+#rqkmjgvzblsaoicfntxewduphy
+
+for i in range(len(letras)): # Manera no Pythónica
+    if letras [i] in vocales:
+        print('{} en la posición {}'.format(letras[i], i))
+        print('Versión no Pythónica')
+# a en la posición 11
+# o en la posición 12
+# i en la posición 13
+# e en la posición 19
+# u en la posición 22
+
+for i, letra in enumerate(letras): # Manera Pythónica
+    if letra in vocales:
+        print('{} en la posición {}'.format(letra, i))
+        print('Versión Pythónica')
+
+# a en la posición 11
+# o en la posición 12
+# i en la posición 13
+# e en la posición 19
+# u en la posición 22
+
+# En este ejemplo buscamos las posiciones de las vocales en un abecedario desordenado. Para ello usamos la función enumerate, que nos pide una secuencia y nos devuelve la misma secuencia asociada a sus índices:
+# Ejemplos de enumerate. Hay que envolverlo en list() o recorrerlo en un for
+abcde = sorted(letras)[:5]
+
+list(enumerate(abcde)) # Devuelve secuencias con sus índices
+[(0, 'a'), (1, 'b'), (2, 'c'), (3, 'd'), (4, 'e')]
+print("Enumeración desde 0:", list(enumerate(abcde))) 
+
+list(enumerate(abcde, 10)) # Podemos decirle en que índice empieza
+[(10, 'a'), (11, 'b'), (12, 'c'), (13, 'd'), (14, 'e')]
+print("Enumeración desde 10:", list(enumerate(abcde, 10)))
+
+
+# Iteradores (pag.23)
 
