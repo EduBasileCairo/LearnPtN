@@ -1,0 +1,97 @@
+# Creando nuestros propios iteradores:
+# Ahora que entendemos completamente cómo funciona el protocolo de iteración de Python y qué son los iterables y los iteradores, estamos preparados para crear nuestros propios objetos iterables e iteradores. Como hemos visto, un objeto iterador es aquel que implementa el método __next__ especificando cuál va a ser el siguiente elemento a devolver tras cada llamada. Sabiendo esto, vamos a crear nuestro primer objeto iterador:
+### class Repetidor:
+###     def __init__(self, veces, item):
+###         self.veces = veces
+###         self.item = item
+###         self.counter = 0
+###     def __iter__(self): # Un iterador debe tener este método
+###         return self
+###     
+###     def __next__(self): # Devuelve el mismo elemento hasta que se consuma
+###         if self.counter == self.veces:
+###             raise StopIteration('Iterador consumido')
+###         self.counter += 1
+###         return self.item
+###     
+### # Crear un iterador que repite "Hola Python" 3 veces
+### rep = Repetidor(3, "Hola Python")
+### 
+### # Usando el iterador en un bucle
+### for item in rep:
+###     print(item)
+### 
+### # También se puede usar next()
+### rep2 = Repetidor(2, "Python")
+### print(next(rep2))  # Python
+### print(next(rep2))  # Python
+### print(next(rep2))  # Error StopIteration
+### 
+# En este ejemplo estamos creando una clase que permite ir generando repeticiones del parámetro que le hayamos pasado al constructor. Con esto hemos creado nuestro primer iterador.
+### # Vamos a recorrerlo manualmente:
+### class Repetidor:
+###     def __init__(self, veces, item):
+###         self.veces = veces
+###         self.item = item
+###         self.counter = 0
+### 
+###     def __iter__(self):
+###         """Un iterador debe devolverse a sí mismo"""
+###         return self
+### 
+###     def __next__(self):
+###         """Devuelve el mismo elemento hasta que se consuma"""
+###         if self.counter == self.veces:
+###             raise StopIteration('Iterador consumido')
+###         self.counter += 1
+###         return self.item
+### 
+### # Crear un iterador que repite "Python" 3 veces
+### rep = Repetidor(3, "Python")
+### 
+### # Usando next() manualmente
+### print(next(rep))  # Python
+### print(next(rep))  # Python
+### print(next(rep))  # Python
+### print(next(rep))  # ❌ Error StopIteration
+### 
+#Pero fijaos que aún no puede ser recorrido por un bucle for porque nuestra clase no es iterable. Para convertirlo en un iterable simplemente hay que implementar el método __iter__:
+### class Repetidor():
+### 
+###     def __init__(self, veces, item):
+###         self.veces = veces
+###         self.item = item
+###         self.counter = 0
+### 
+###     def __next__(self):
+###         if self.counter == self.veces:
+###             raise StopIteration('Iterador consumido')
+###         self.counter += 1
+###         return self.item
+### 
+###     def __iter__(self):
+###         return self
+###     for r in Repetidor(3, 'Python, Bravo!!!'):
+###         print(r, end=' ')
+### # Python! Python! Python!
+
+# Notad que, como Repetidor ya era un iterador, puede devolverse a sí mismo usando la referencia a self. Al haber definido los métodos __iter__ y __next__, nuestra clase ahora es un iterable y un iterador a la vez. Tened en cuenta que es posible crear iterables que no son iteradores: con que devuelvan un objeto iterador, que no tiene por qué ser uno mismo, ya basta:
+class Repetidor():
+
+    def __init__(self, veces, *items):
+        self.veces = veces
+        self.items = items
+
+    def __iter__(self):
+        return iter(self.items * self.veces) # Devuelve iterador de la lista repetida
+for r in Repetidor(3, 'a', 'b', 'c'): #Usando el iterador
+    print(r, end=' ')
+# a b c a b c a b c
+# En este ejemplo hemos modificado nuestra clase Repetidor para que acepte varios elementos y los repita de manera concatenada un número determinado de veces. Ahora Repetidor es sólo un iterable ya que no implementa el método __next__. Esto hace que con __iter__ ya no se devuelve a sí misma, si no que devuelve un iterador formado por la lista resultante de la combinación de los parámetros entrada por el número de repeticiones.
+
+rep = Repetidor(3, 'a', 'b', 'c')
+it = iter(rep)
+isinstance(it,Repetidor)
+False
+
+# La principal ventaja de esto es que ahora el objeto no se consume a sí mismo, ya que genera un iterador que es el que sí se consume. Dependiendo de vuestras necesidades de diseño podéis necesitar una u otra opción.

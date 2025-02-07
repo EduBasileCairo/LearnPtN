@@ -378,5 +378,155 @@ list(enumerate(abcde, 10)) # Podemos decirle en que índice empieza
 print("Enumeración desde 10:", list(enumerate(abcde, 10)))
 
 
-# Iteradores (pag.23)
+# Iteradores: ¿qué son los iteradores, y cuál es el protocolo que permite que cualquier secuencia de Python pueda ser recorrida en un for. Además, probaremos que, sobrecargando un par de funciones, podemos dotar a nuestras propias clases de esas capacidades de iteración.
+
+# Objetos Iterables:podemos recorrer cualquier secuencia en un bucle for:
+for num in [1, 2, 3, 4, 5, 6]:
+    print(num ** 2, end= ' ') # Cada elemento de la lista es elevado al cuadrado
+# 1 4 9 16 25 36
+for num in [12, 38, 99, 1]:
+    print(num / 2, end= ' ') # Cada elemento de la lista es dividido por 2
+# 6.0 19.0 49.5 0.5
+for letra in 'Python': # # Cada elemento de la lista se convierte a mayúscula y es separado con un espacio
+    print(letra.upper(), end=' ')
+# P Y T H O N
+# Un objeto iterable cumple una de estas condiciones: 1) Está almacenado físicamente como una secuencia 2) Produce un resultado detrás de otro en el contexto de una herramienta de iteración como un bucle for, una lista por comprensión, etc. Otra manera de comprender el concepto de objeto iterable es entender que un iterable es, o bien una secuencia ordenada físicamente (como una lista, tupla, etc.) o bien un objeto que se comporta virtualmente como una secuencia.
+
+# El Protocolo de Iteración de Python
+# Un objeto se comporta como una secuencia virtual, cuando implementa un protocolo, llamado protocolo de iteración, que define cómo tiene que comportarse un objeto de manera que sea capaz de devolver un elemento detrás de otro a demanda cuando queramos recorrerlo. La mejor manera de entender el protocolo de iteración es verlo funcionar en los objetos builtin de Python. Nosotros lo vamos a ver con el tipo file, que lo usaremos para ir recorriendo un fichero línea a línea. Primero, vamos a crear el fichero, que contendrá una versión recortada del Zen de Python:
+# El Protocolo de Iteración de Python
+# Vamos a crear un archivo con una versión recortada del Zen de Python
+zen = """Bello es mejor que feo.
+Explícito es mejor que implícito.
+Simple es mejor que complejo.
+Complejo es mejor que complicado.
+"""
+
+# Escritura del archivo usando with open()
+with open(r'C:\Users\Viviana\Documents\Phyton\PracticasPersonales\short_zen.txt', 'w') as f:
+    f.write(zen)  # Escribimos el contenido en el archivo
+
+# Ahora leemos el fichero línea a línea, utilizando readline()
+with open(r'C:\Users\Viviana\Documents\Phyton\PracticasPersonales\short_zen.txt', 'r') as f:
+    print(f.readline())  # 'Bello es mejor que feo.\n'
+    print(f.readline())  # 'Explícito es mejor que implícito.\n'
+    print(f.readline())  # 'Simple es mejor que complejo.\n'
+    print(f.readline())  # 'Complejo es mejor que complicado.\n'
+    print(f.readline())  # '' (Cadena vacía al llegar al final)
+# El método readline nos permite ir leyendo el fichero línea a línea hasta que nos encontremos una cadena vacía. Sin embargo, ¿cómo funciona este método? De hecho, los ficheros en Python implementan un método que tiene un comportamiento muy parecido. El método __next__ también lee una línea del fichero cada vez que lo llamamos. Sin embargo, cuando finaliza el fichero, nos genera una excepción de tipo StopIteration.
+with open(r'C:\Users\Viviana\Documents\Phyton\PracticasPersonales\short_zen.txt', 'w') as f:
+    f.write(zen)  # Escribimos el contenido en el archivo
+
+# Lectura usando el protocolo de iteración con next()
+with open(r'C:\Users\Viviana\Documents\Phyton\PracticasPersonales\short_zen.txt', 'r') as f:
+    print(next(f))  # 'Bello es mejor que feo.\n'
+    print(next(f))  # 'Explícito es mejor que implícito.\n'
+    print(next(f))  # 'Simple es mejor que complejo.\n'
+    print(next(f))  # 'Complejo es mejor que complicado.\n'
+
+# Intentar leer otra línea cuando ya no hay más generará StopIteration
+#    print(next(f))  # Esto provocará StopIteration, si quitamos la # del inicio de esta línea recibiremos en la consola el mesaje "Stopinteraction"
+# Esta función es lo que llamamos el protocolo de iteración de Python. Cualquier objeto que implemente esta función para avanzar al siguiente resultado y que lance la excepción StopIteration tras el último resultado es considerado como un iterador. Esto implica que cualquier objeto que implementa estas dos reglas, puede ser incluido en un bucle for, en una lista por comprensión, etc. ya que lo que hacen en realidad estos mecanismos es ir llamando a la función __next__ en cada iteración. De hecho, esto es lo que pasa con el tipo builtin de ficheros de Python: podemos recorrerlo en un bucle for para ir procesando sus líneas una a una:
+for linea in open(r'C:\Users\Viviana\Documents\Phyton\PracticasPersonales\short_zen.txt'):
+    print(linea.upper(), end='')
+    print('Con "for"')
+
+# BELLO ES MEJOR QUE FEO.
+# EXPLÍCITO ES MEJOR QUE IMPLÍCITO.
+# SIMPLE ES MEJOR QUE COMPLEJO.
+# COMPLEJO ES MEJOR QUE COMPLICADO.
+
+# La función next: Para simplificar la iteración manual con __next__, Python ofrece la función builtin next que nos permite acceder a la iteración manual de __next__ más fácilmente. Lo que hace realmente la función next(obj) es llamar directamente a obj.__next()__:
+# Abrimos el archivo usando la forma correcta de la ruta.
+# SIGUIENTE CODIGO NO EJECUTABLE página 26....
+f = open(r'C:\Users\Viviana\Documents\Phyton\PracticasPersonales\short_zen.txt')
+f.__next__()
+'Bello es mejor que feo.\n'
+next(f)
+'Explícito es mejor que implícito.\n'
+next(f)
+'Complejo es mejor que complicado.\n'
+next(f)
+# -----------------------------------------
+#StopIteration Traceback (most recent call last)
+# <ipython-input-77-468f0afdf1b9> in <module>() ----> 1 next(f)
+# StopIteration
+
+
+# ITERADORES E ITERABLES: Ahora que empezamos a entender cómo funciona el protocolo de iteración en Python, vamos a profundizar un poco más para entender como las diferencias entre objetos iterables como las secuencias que hemos visto al principio de la unidad y los iteradores que acabamos de conocer.
+
+# La función iter
+# Acabamos de ver como los ficheros en Python son iteradores ya que implementan la función __next__.Veamos si ocurre lo mismo con otros tipos de datos como las listas: 
+
+# Las siguientes líneas comentadas con ### si las descomentamos arrojan un Stopinteraction como corresponde:
+
+### lista = [1, 2, 3]  # Lista normal (iterable, pero no iterador)
+### 
+### # Convertimos la lista en un iterador usando iter()
+### iterador = iter(lista)
+### 
+### # Ahora sí podemos usar next()
+### print(next(iterador))  # 1
+### print(next(iterador))  # 2
+### print(next(iterador))  # 3
+### 
+### # Intentar avanzar más allá de los elementos disponibles generará StopIteration
+### print(next(iterador))  # ¡Error! StopIteration
+
+# ¿Qué es lo que ha pasado? La función next nos está produciendo una excepción de tipo TypeError diciéndonos que las listas nos son iteradores. ¿Pero, entonces, como es posible que podamos recorrer una lista en un bucle for? Si recordáis, al principio de la unidad hemos dicho que las listas son iterables, y con el error que acabamos de obtener está claro que un iterable no es lo mismo que un iterador. Por ello, es el momento de entender qué es un iterable y en qué se diferencia de un iterador: 1)Iterable: Un objeto iterable es un objeto que devuelve un iterador. Para ello implementa el método __iter__. 2) Iterador: Un objeto iterador implementa __next__, lo que le permite ser iterado en bucles for, etc. Como vemos, los objetos iterables no son iteradores, sino que devuelven iteradores cuando se les pide. Veamos un ejemplo con nuestra lista:
+
+# Las siguientes líneas comentadas con ### si las descomentamos arrojan un Stopinteraction como corresponde:
+
+### li = lista.__iter__()
+### li.__next__()
+### # 1
+### next(li)
+### # 2
+### next(li)
+### # 3
+### next(li)
+### # -----------------------------------------
+### # StopIteration Traceback(most recent call last)
+### # <ipython-input-91-deb767b63ff8> in <module>() ----> 1 next(li)
+### # StopIteration:
+
+# Para simplificar la iteración manual, Python implementa la función iter. De esta manera iter(obj_iterable) es equivalente a obj_iterable.__iter()__:
+
+# Las siguientes líneas comentadas con ### si las descomentamos arrojan un Stopinteraction como corresponde:
+
+### li = iter(lista)
+### next(li)
+### # 1
+### next(li)
+### # 2
+### next(li)
+### # 3
+### next(li)
+### # -----------------------------------------
+### # StopIteration Traceback(most recent call last)
+### # <ipython-input-95-deb767b63ff8> in <module>() ----> 1 next(li)
+### # StopIteration:
+
+# De hecho, lo que hacen los bucles for, las listas por comprensión, etc. es llamar a la función __iter__ del objeto iterable que van a recorrer antes de empezar a hacerlo. Con esto obtienen el iterador que es lo que recorren de verdad. Notad también que a medida que avanzamos por un objeto iterador, vamos consumiéndolo y ya no podemos volver atrás. Cuando llegamos al final del iterador y obtenemos la excepción StopIteration, decimos que hemos consumido el iterador. Para volver a recorrerlo de nuevo, tendríamos que pedirle al iterable que ha creado el iterador que lo genere de nuevo.
+
+### li = iter(lista)
+### next(li)
+### # 1
+### next(li)
+### # 2
+### next(li)
+### # 3
+### next(li)
+### # -----------------------------------------
+### # StopIteration Traceback(most recent call last)
+### # <ipython-input-100-deb767b63ff8> in <module>() ----> 1 next(li)
+### # StopIteration:
+### next(li) # Hemos consumido el iterador: no podemos iterar más
+### # ---------------------------------------------------
+### # StopIteration Traceback(most recent call last)
+### # <ipython-input-100-deb767b63ff8> in <module>() ----> 1 next(li)
+### # StopIteration:
+### li = iter(lista) # Generamos otro iterador para volver a recorrerlo
+### next(li)
+### #1
 
