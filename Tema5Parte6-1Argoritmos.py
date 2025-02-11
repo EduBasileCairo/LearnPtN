@@ -42,7 +42,7 @@ def codigo_4(array):
     for k in range(len(array)):
         if( array[k] % 2 == 0 ):
             return k
-    return null
+# return null
 # Dependiendo de los valores que se guarden en el vector, así será el tiempo que dure el algoritmo en resolver el problema. Si el array es una secuencia de números enteros, entonces solo hará falta una iteración. Si es una lista de números impares, entonces recorrerá todas las iteraciones. En el mejor de los escenarios el número par será el primero de la lista, lo que concluiría el algoritmo. En el peor caso ni siquiera tenga un número par, porque recorrería todas las instrucciones. Para el mejor caso tendríamos una complejidad algorítmica: Para el mejor caso tendríamos una complejidad algorítmica: F(x)=1 Para el peor de los casos la complejidad algorítmica sería: F(x)=n Para expresar el peor caso usaremos una notación conocida como “O Grande” y se escribe: O(n). Que significa complejidad en el peor caso. Se escribe como “O” pero en realidad es la letra griega Omicron.
 
 # ÓRDEN DE COMPLEJIDAD: Hasta aquí, es posible medir cualquier algoritmo. Pero incluso así es complicado comparar unos algoritmos con otros. Además, se requiere poder categorizar lo complejo que es un algoritmo con respecto a otros. Para esto recurriremos al orden de complejidad. Como vimos antes. Para medir un algoritmo necesitamos recurrir al escenario de peor caso y con un gran volumen de datos.
