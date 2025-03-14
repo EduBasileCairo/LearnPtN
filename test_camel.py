@@ -1,4 +1,8 @@
-import unittest
+# Viene de Tema7Parte6TesteandoScriptConUnittest.py
+
+# EJEMPLO 2. CAMEL CASE
+# Un diccionario de entradas con salidas esperadas. También utiliza parches para parchear las funciones integradas de entrada y salida para probar la entrada del usuario y la salida correcta que se está imprimiendo. Observe el uso del administrador de contexto de parches, que se encarga de quitar los parches cuando haya terminado. De lo contrario, es posible que deba reemplazar las funciones de entrada/impresión originales.import unittest
+
 from unittest.mock import patch
 import camel
 
