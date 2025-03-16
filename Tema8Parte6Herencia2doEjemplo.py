@@ -48,3 +48,36 @@ class kwad(Moto):
 miKwad = kwad("Linhai", "LH 500")
 
 miKwad.resumen()
+
+# HERENCIA MULTIPLE:
+# Definición propia de la clase V_electricos
+
+class V_electricos():
+    def __init__(self):
+        self.bateria = 100
+        self.en_carga = False
+
+    def cargar(self):
+        self.en_carga = True
+        self.bateria = 100
+        print("Vehículo eléctrico cargando...")
+
+    def descargar(self, consumo):
+        if self.bateria >= consumo:
+            self.bateria -= consumo
+            self.en_carga = False
+            print(f"Batería restante: {self.bateria}%")
+        else:
+            print("Batería insuficiente.")
+
+# APUNTE
+class B_electrica(Vehiculo, V_electricos):
+    def estado(self):
+        print("Marca", self.marca,"Modelo", self.modelo)
+
+def cilindrada(self):
+    self.cilindrada=3000
+def estado(self):
+    print("Marca", self.marca,"Modelo", self.modelo, "Cilindrada", self.cilindrada)
+
+

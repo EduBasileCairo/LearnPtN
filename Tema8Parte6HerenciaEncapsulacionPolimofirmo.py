@@ -30,3 +30,4 @@ class Moto(Vehiculo):
 miMoto = Moto("Kawasaki", "Ninja")
 
 miMoto.resumen()
+
